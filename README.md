@@ -1,4 +1,3 @@
 # multiplayer snake game with socket.io
-1. `yarn install` install dependcise
+1. `cd server yarn install` install dependcise, after `node server.js`
 2. cd frontend `http-server -p 3001`
-3. cd server `node server.js`
