@@ -7,14 +7,13 @@ const state = {};
 const clientRooms = {};
 
 io.on('connection', client => {
-  console.log('id= ', client.id);
+
   client.on('keydown', handleKeydown);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
 
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms[roomName];
-
     let allUsers;
     if(room) {
       allUsers = room.sockets;
@@ -69,7 +68,6 @@ io.on('connection', client => {
     const vel = getUpdatedVelocity(keyCode);
 
     if(vel) {
-      console.log('state = ', state);
       state[roomName].players[client.number - 1].vel = vel;
     }
   }
@@ -81,7 +79,6 @@ function startGameInterval(roomName) {
 
     if(!winner) {
       emitGameState(roomName, state[roomName]);
-      // client.emit('gameState', JSON.stringify(state));
     }
     else {
       emitGameOver(roomName, winner);

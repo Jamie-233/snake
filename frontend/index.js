@@ -2,7 +2,7 @@ const BG_COLOUR = '#231f20';
 const SNAKE_COLOUR = '#c2c2c2';
 const FOOD_COLOUR = '#e66916';
 
-const socket = io('http://localhost:3000');
+const socket = io('http://192.168.2.102:3000');
 
 socket.on('init', handleInit);
 socket.on('gameState', handleGameState);
@@ -28,6 +28,10 @@ function newGame() {
 
 function joinGame() {
   const code = gameCodeInput.value;
+  if(!code) {
+    alert('Gun');
+    return;
+  };
   socket.emit('joinGame', code);
   init();
 }
@@ -81,14 +85,11 @@ function paintPlayer(playerState, size, colour) {
 }
 
 function handleInit(number) {
-  console.log(number);
   playerNumber = number;
 }
 
 function handleGameState(gameState) {
-  if (!gameActive) {
-    return;
-  }
+  if (!gameActive) return;
   gameState = JSON.parse(gameState);
   requestAnimationFrame(() => paintGame(gameState));
 }
